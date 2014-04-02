@@ -57,8 +57,9 @@ def main():
     parser.add_argument('commands_file', help='Configuration file to use')
     parser.add_argument('-l', '--log-file', help='File to log to')
     args = parser.parse_args()
-    app = create_app(args.config_file, args.log_file)
+    app = create_app(args.commands_file, args.log_file)
     app.run(port=8787)
+
 
 if __name__ == '__main__':
     main()
