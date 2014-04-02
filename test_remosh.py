@@ -4,7 +4,7 @@ import os
 import tempfile
 import unittest
 
-class RemotedTest(unittest.TestCase):
+class RemoshTest(unittest.TestCase):
 
     def setUp(self):
         self.test_commands = tempfile.NamedTemporaryFile(delete=False)

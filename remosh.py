@@ -6,14 +6,14 @@ import argparse
 import logging
 import sys
 
-_logger = logging.getLogger('remoted')
+_logger = logging.getLogger('remosh')
 
 def create_app(commands_file, log_file=None):
     """ Create the WSGI app and load configuration from file.
 
     Logging to log_file and sysout.
     """
-    app = Flask('remoted')
+    app = Flask('remosh')
     _init_logging(log_file)
     commands = {}
     with open(commands_file) as fh:
@@ -53,7 +53,7 @@ def _init_logging(log_file=None):
 
 
 def main():
-    parser = argparse.ArgumentParser(prog='remoted')
+    parser = argparse.ArgumentParser(prog='remosh')
     parser.add_argument('commands_file', help='Configuration file to use')
     parser.add_argument('-l', '--log-file', help='File to log to')
     args = parser.parse_args()
