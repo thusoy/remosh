@@ -22,7 +22,7 @@ setup(
     install_requires=install_requires,
     entry_points={
         'console_scripts': [
-            'remoted = remoted:main',
+            'remosh = remosh:main',
         ]
     },
     classifiers=[
