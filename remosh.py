@@ -18,9 +18,10 @@ def create_app(commands_file, log_file=None):
     commands = {}
     with open(commands_file) as fh:
         for line in fh:
-            command_id, command = [s.strip() for s in line.split(': ', 1)]
-            commands[command_id] = command
-            _logger.info('Intialized command: %s -> %s', command_id, command)
+            if line.strip():
+                command_id, command = [s.strip() for s in line.split(': ', 1)]
+                commands[command_id] = command
+                _logger.info('Intialized command: %s -> %s', command_id, command)
     app.config['commands'] = commands
 
     app.add_url_rule('/', 'exec_commnad', exec_commnad, methods=['POST'])
