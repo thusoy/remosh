@@ -1,4 +1,4 @@
-remoted
+remoted [![Build Status](https://travis-ci.org/thusoy/remoted.svg)](https://travis-ci.org/thusoy/remoted)
 =======
 
 Remote execution engine with less than 100 lines of code.
