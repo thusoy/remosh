@@ -2,6 +2,14 @@
 # -*- encoding: utf-8 -*-
 
 from setuptools import setup
+import sys
+
+install_requires = [
+    'flask'
+]
+
+if sys.version_info < (2, 7, 0):
+    install_requires.append('argparse')
 
 setup(
     name='remoted',
@@ -11,7 +19,7 @@ setup(
     url='https://github.com/thusoy/remoted',
     description="A remote execution engine",
     py_modules=['remoted'],
-    install_requires=['flask'],
+    install_requires=install_requires,
     entry_points={
         'console_scripts': [
             'remoted = remoted:main',
