@@ -1,4 +1,4 @@
-import remoted
+import remosh
 
 import os
 import tempfile
@@ -10,7 +10,7 @@ class RemotedTest(unittest.TestCase):
         self.test_commands = tempfile.NamedTemporaryFile(delete=False)
         self.test_commands.write('secretid: echo "Hello, World!"\n')
         self.test_commands.close()
-        self.app = remoted.create_app(self.test_commands.name, 'test.log')
+        self.app = remosh.create_app(self.test_commands.name, 'test.log')
         self.app.debug = True
         self.client = self.app.test_client()
 

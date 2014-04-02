@@ -12,7 +12,7 @@ if sys.version_info < (2, 7, 0):
     install_requires.append('argparse')
 
 setup(
-    name='remoted',
+    name='remosh',
     version='0.1.0',
     author='Tarjei Husøy',
     author_email='tarjei@roms.no',
