@@ -8,7 +8,7 @@ python:
 install:
   - pip install -e .
 
-script: python test_remoted.py
+script: python test_remosh.py
 
 notifications:
   email: false
