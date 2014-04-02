@@ -1,4 +1,4 @@
-remosh [![Build Status](https://travis-ci.org/thusoy/remosh.svg)](https://travis-ci.org/thusoy/remosh)
+remosh [![Build Status](https://travis-ci.org/thusoy/remosh.svg?branch=master)](https://travis-ci.org/thusoy/remosh)
 =======
 
 Remote execution engine with less than 100 lines of code.
