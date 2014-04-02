@@ -8,7 +8,7 @@ class RemotedTest(unittest.TestCase):
 
     def setUp(self):
         self.test_commands = tempfile.NamedTemporaryFile(delete=False)
-        self.test_commands.write('secretid: echo "Hello, World!"\n')
+        self.test_commands.write('secretid: echo "Hello, World!"\n'.encode('utf-8'))
         self.test_commands.close()
         self.app = remosh.create_app(self.test_commands.name, 'test.log')
         self.app.debug = True
