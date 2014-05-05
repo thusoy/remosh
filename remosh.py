@@ -24,12 +24,13 @@ def create_app(commands_file, log_file=None):
                 _logger.info('Intialized command: %s -> %s', command_id, command)
     app.config['commands'] = commands
 
-    app.add_url_rule('/', 'exec_commnad', exec_commnad, methods=['POST'])
+    app.add_url_rule('/', 'exec_command', exec_command, methods=['POST'])
+    app.config['OUTPUT_FILE'] = open('/tmp/remoshoutput', 'w')
 
     return app
 
 
-def exec_commnad():
+def exec_command():
     """ Handle incoming requests. """
     command_id = request.args.get('id')
     _logger.debug('Got request with id %s', command_id)
