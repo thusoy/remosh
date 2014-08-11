@@ -6,7 +6,6 @@ import argparse
 import logging
 import sys
 
-_logger = logging.getLogger('remosh')
 
 def create_app(commands_file, log_file=None):
     """ Create the WSGI app and load configuration from file.
@@ -14,14 +13,14 @@ def create_app(commands_file, log_file=None):
     Logging to log_file and sysout.
     """
     app = Flask('remosh')
-    _init_logging(log_file)
+    _init_logging(app, log_file)
     commands = {}
     with open(commands_file) as fh:
         for line in fh:
             if line.strip():
                 command_id, command = [s.strip() for s in line.split(': ', 1)]
                 commands[command_id] = command
-                _logger.info('Intialized command: %s -> %s', command_id, command)
+                app.logger.debug('Intialized command: %s -> %s', command_id, command)
     app.config['commands'] = commands
 
     app.add_url_rule('/', 'exec_command', exec_command, methods=['POST'])
@@ -33,25 +32,30 @@ def create_app(commands_file, log_file=None):
 def exec_command():
     """ Handle incoming requests. """
     command_id = request.args.get('id')
-    _logger.debug('Got request with id %s', command_id)
+    current_app.logger.debug('Got request with id %s', command_id)
     command = current_app.config['commands'].get(command_id)
     if command:
-        _logger.info('Executing command: %s', command)
-        Popen(command, shell=True)
+        current_app.logger.info('Executing command: %s', command)
+        output_handler = current_app.config['OUTPUT_FILE']
+        Popen(command, shell=True, bufsize=-1, stdout=output_handler, stderr=output_handler)
         return 'Goodie, goodie, will do!'
     else:
-        _logger.info('Command not found with id: %s', command_id)
+        current_app.logger.info('Command not found with id: %s', command_id)
         return 'Err, unknown id.', 400
 
 
-def _init_logging(log_file=None):
+def _init_logging(app, log_file=None):
     """ Configure loggers. """
+    formatter = logging.Formatter(fmt='%(asctime)s [%(levelname)s] %(message)s')
     sysout_handler = logging.StreamHandler(sys.stdout)
-    _logger.addHandler(sysout_handler)
+    sysout_handler.setFormatter(formatter)
+    app.logger.addHandler(sysout_handler)
     if log_file:
+        print("logging to file: %s" % log_file)
         logfile_handler = logging.FileHandler(log_file)
-        _logger.addHandler(logfile_handler)
-    _logger.setLevel(logging.INFO)
+        logfile_handler.setFormatter(formatter)
+        app.logger.addHandler(logfile_handler)
+    app.logger.setLevel(logging.INFO)
 
 
 def main():
